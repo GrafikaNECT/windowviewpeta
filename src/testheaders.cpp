@@ -6,6 +6,8 @@
 #include "Transformable.h"
 #include "Point.h"
 #include "Clippable.h"
+#include "Alam.h"
+#include "Window.h"
 
 int main(){
 //kosongkan
