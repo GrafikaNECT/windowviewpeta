@@ -22,7 +22,7 @@ class SolidPolygon: public std::vector<point>{
 
 	void draw();
 
-	SolidPolygon clip(int x0, int x1, int y0, int y1);
+	SolidPolygon clip(point min, point max);
 
 	private:
 

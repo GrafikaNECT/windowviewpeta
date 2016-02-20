@@ -1,5 +1,6 @@
 #include "line.h"
 #include "print.h"
+#include <iostream>
 
 // Constructor
 line::line(int _x1, int _y1, int _x2, int _y2, Texture t) {
@@ -53,80 +54,88 @@ void line::rotate(float t, point p) {
 	p2.rotate(t,p);
 }
 
-OutCode line::ComputeOutCode(int x, int y, int xmin, int xmax, int ymin, int ymax){
+OutCode line::ComputeOutCode(int x, int y, point min, point max){
 	OutCode code;
 
 	code = INSIDE;          // initialised as b eing inside of clip window
 
-	if (x < xmin)           // to the left of clip window
+	if (x < min.getX())           // to the left of clip window
 		code |= LEFT;
-	else if (x > xmax)      // to the right of clip window
+	else if (x > max.getX())      // to the right of clip window
 		code |= RIGHT;
-	if (y < ymin)           // below the clip window
+	if (y < min.getY())           // below the clip window
 		code |= BOTTOM;
-	else if (y > ymax)      // above the clip window
+	else if (y > max.getY())      // above the clip window
 		code |= TOP;
 
 	return code;
 
 }
 
-line line::clip(int x0, int x1, int y0, int y1){
+line line::clip(point min, point max){
 	// Cohen–Sutherland clipping algorithm clips a line from
 // P0 = (x0, y0) to P1 = (x1, y1) against a rectangle with 
 // diagonal from (xmin, ymin) to (xmax, ymax).
 	// compute outcodes for P0, P1, and whatever point lies outside the clip rectangle
-	OutCode outcode0 = ComputeOutCode(x0, y0);
-	OutCode outcode1 = ComputeOutCode(x1, y1);
+	int x1 = p1.getX();
+	int x2 = p2.getY();
+	int y1 = p1.getX();
+	int y2 = p2.getY();
+	OutCode outcode1 = ComputeOutCode(x1,y1,min,max);
+	OutCode outcode2 = ComputeOutCode(x2,y2,min,max);
 	bool accept = false;
 
 	while (true) { 
-		if (!(outcode0 | outcode1)) { // Bitwise OR is 0. Trivially accept and get out of loop
+		if (!(outcode1 | outcode2)) { // Bitwise OR is 0. Trivially accept and get out of loop
 			accept = true;
 			break;
-		} else if (outcode0 & outcode1) { // Bitwise AND is not 0. Trivially reject and get out of loop
+		} else if (outcode1 & outcode2) { // Bitwise AND is not 0. Trivially reject and get out of loop
 			break;
 		} else {
 			// failed both tests, so calculate the line segment to clip
 			// from an outside point to an intersection with clip edge
 			double x, y;
+			int xmax = max.getX();
+			int ymax = max.getY();
+			int xmin = min.getX();
+			int ymin = min.getY();
 
 			// At least one endpoint is outside the clip rectangle; pick it.
-			OutCode outcodeOut = outcode0 ? outcode0 : outcode1;
+			OutCode outcodeOut = outcode1 ? outcode1 : outcode2;
 
 			// Now find the intersection point;
-			// use formulas y = y0 + slope * (x - x0), x = x0 + (1 / slope) * (y - y0)
+			// use formulas y = y1 + slope * (x - x1), x = x1 + (1 / slope) * (y - y1)
 			if (outcodeOut & TOP) {           // point is above the clip rectangle
-				x = x0 + (x1 - x0) * (ymax - y0) / (y1 - y0);
+				x = x1 + (x2 - x1) * (ymax - y1) / (y2 - y1);
 				y = ymax;
 			} else if (outcodeOut & BOTTOM) { // point is below the clip rectangle
-				x = x0 + (x1 - x0) * (ymin - y0) / (y1 - y0);
+				x = x1 + (x2 - x1) * (ymin - y1) / (y2 - y1);
 			 	y = ymin;
 			} else if (outcodeOut & RIGHT) {  // point is to the right of clip rectangle
-				y = y0 + (y1 - y0) * (xmax - x0) / (x1 - x0);
+				y = y1 + (y2 - y1) * (xmax - x1) / (x2 - x1);
 				x = xmax;
 			} else if (outcodeOut & LEFT) {   // point is to the left of clip rectangle
-				y = y0 + (y1 - y0) * (xmin - x0) / (x1 - x0);
+				y = y1 + (y2 - y1) * (xmin - x1) / (x2 - x1);
 				x = xmin;
 			}
 
 			// Now we move outside point to intersection point to clip
 			// and get ready for next pass.
-			if (outcodeOut == outcode0) {
-				x0 = x;
-				y0 = y;
-				outcode0 = ComputeOutCode(x0, y0);
-			} else {
+			if (outcodeOut == outcode1) {
 				x1 = x;
 				y1 = y;
-				outcode1 = ComputeOutCode(x1, y1);
+				outcode1 = ComputeOutCode(x1, y1, min, max);
+			} else {
+				x2 = x;
+				y2 = y;
+				outcode2 = ComputeOutCode(x2, y2, min, max);
 			}
 		}
 	}
 	if (accept) {
-               return line(xmin, ymin, xmax, ymax);
-	}else{
-		return line(-1,-1,-1,-1)
+        return line(x1,y1,x2,y2);
+	} else{
+		return line(-1,-1,-1,-1);
 	}
 }
 

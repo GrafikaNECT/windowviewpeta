@@ -33,8 +33,8 @@ public:
 	void rotate(float t, int x, int y);
 	void rotate(float t, point p);
 	
-	OutCode ComputeOutCode(int x0, int x1, int y0, int y1);
-	line clip(int x0, int x1, int y0, int y1);
+	OutCode ComputeOutCode(int x, int y, point max, point min);
+	line clip(point min, point max);
 
 	// Graphics
 	void draw();

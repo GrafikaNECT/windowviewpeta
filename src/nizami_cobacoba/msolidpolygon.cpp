@@ -18,9 +18,9 @@ int main(){
 	printToScreen();
 	sleep(1);
 
-	for (int x0=0;x0<400;x0+=10){
-		for (int y0=0;y0<400;y0+=10){
-			for (int x1=x0+10;x1<400;x1+=10){
+	for (int x0=0;x0<100;x0+=10){
+		for (int y0=0;y0<100;y0+=10){
+			for (int x1=x0+10;x1<150;x1+=10){
 				for (int y1=y0+10;y1<400;y1+=10){
 					drawCanvas(10,10,10,255);
 
@@ -34,13 +34,10 @@ int main(){
 						drawPix(x,y1,0,0,255,255);
 					}
 
+					point min(x0,y0);
+					point max(x1,y1);
 
-					SolidPolygon sp2 = sp.clip(x0,x1,y0,y1);
-					std::cout<<"size="<<sp.size()<<std::endl;
-					for (int i=0;i<sp2.size();i++){
-						std::cout<<sp2[i].getX()<<" "<<sp2[i].getY()<<std::endl;
-					}
-					sp2.draw();
+					sp.clip(min,max).draw();
 					printToScreen();
 				}
 			}

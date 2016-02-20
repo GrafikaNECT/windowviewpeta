@@ -126,10 +126,16 @@ point computeIntersectionWithYline(point p1, point p2, int y){
 //alsdkfjalsdkfjlaskdjflaskdfja;skdfj;asdk;jf
 //sori udah pusing
 //males bikin komentar
-SolidPolygon SolidPolygon::clip(int x0, int x1, int y0, int y1){
+
+SolidPolygon SolidPolygon::clip(point min, point max){
 	SolidPolygon out = *this;
 	SolidPolygon in;
 	point S;
+
+	int x0 = min.getX();
+	int y0 = min.getY();
+	int x1 = max.getX();
+	int y1 = max.getY();
 
 	//terhadap clipEdge x0y0,x0y1
 	in = out;
@@ -146,10 +152,10 @@ SolidPolygon SolidPolygon::clip(int x0, int x1, int y0, int y1){
 			}
 			out.push_back(*e);
 		}else if (S.getX()>=x0){
-			if (e->getY()<y0)
+			/*if (e->getY()<y0)
 				out.push_back(x0,y0);
 			if (e->getY()>y1)
-				out.push_back(x0,y1);
+				out.push_back(x0,y1);*/
 			out.push_back(computeIntersectionWithXline(S,*e,x0));
 		}
 		S = *e;
@@ -170,10 +176,10 @@ SolidPolygon SolidPolygon::clip(int x0, int x1, int y0, int y1){
 			}
 			out.push_back(*e);
 		}else if (S.getY()<=y1){
-			if (e->getX()<x0)
+			/*if (e->getX()<x0)
 				out.push_back(x0,y1);
 			if (e->getX()>x1)
-				out.push_back(x1,y1);
+				out.push_back(x1,y1);*/
 			out.push_back(computeIntersectionWithYline(S,*e,y1));
 		}
 		S = *e;
@@ -189,15 +195,15 @@ SolidPolygon SolidPolygon::clip(int x0, int x1, int y0, int y1){
 		if (e->getY()>=y0){
 			//if s not inside clipEdge
 			if (S.getY()<y0){
-				out.push_back(computeIntersectionWithYline(S,*e,y1));	
+				out.push_back(computeIntersectionWithYline(S,*e,y0));	
 				//add compute intersection
 			}
 			out.push_back(*e);
 		}else if (S.getY()>=y0){
-			if (e->getX()<x0)
+			/*if (e->getX()<x0)
 				out.push_back(x0,y0);
 			if (e->getX()>x1)
-				out.push_back(x1,y0);
+				out.push_back(x1,y0);*/
 			out.push_back(computeIntersectionWithYline(S,*e,y0));
 		}
 		S = *e;
@@ -206,7 +212,7 @@ SolidPolygon SolidPolygon::clip(int x0, int x1, int y0, int y1){
 	//terhadap clipEdge x1y1,x1y0
 	in = out;
 	out.clear();
-	S = back();
+	S = in.back();
 
 	for (iterator e = in.begin(); e<in.end(); e++){
 		//if e inside clipEdge
@@ -218,10 +224,10 @@ SolidPolygon SolidPolygon::clip(int x0, int x1, int y0, int y1){
 			}
 			out.push_back(*e);
 		}else if (S.getX()<=x1){
-			if (e->getY()<y0)
+			/*if (e->getY()<y0)
 				out.push_back(x1,y0);
 			if (e->getY()>y1)
-				out.push_back(x1,y1);
+				out.push_back(x1,y1);*/
 			out.push_back(computeIntersectionWithXline(S,*e,x1));
 		}
 		S = *e;
