@@ -33,5 +33,26 @@ int main(){
 	}
 	printToScreen();
 	sleep(1);
+	t=Texture::createSingleColorTexture(255,0,0,255);
+	for (int y=0;y<getYRes();y++)
+	for (int x=0;x<getXRes();x++){
+		t.draw(x,y);
+	}
+	printToScreen();
+	sleep(1);
+	t=Texture::createSingleColorTexture(0,0,255,255);
+	for (int y=0;y<getYRes();y++)
+	for (int x=0;x<getXRes();x++){
+		t.draw(x,y);
+	}
+	printToScreen();
+	sleep(1);
+	t=Texture::createSingleColorTexture(0,255,0,255);
+	for (int y=0;y<getYRes();y++)
+	for (int x=0;x<getXRes();x++){
+		t.draw(x,y);
+	}
+	printToScreen();
+	sleep(1);
 	finishPrinter();
 }
