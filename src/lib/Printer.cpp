@@ -1,18 +1,14 @@
 #include "../include/Printer.h"
 
+using namespace std;
+
 int Printer::fbfd = 0;
 long int Printer::screensize = 0;
-char Printer::*fbp = 0;
+char* Printer::fbp = 0;
 long int Printer::location = 0;
-unsigned char Printer::*workspaceframe = NULL;
-
-int Printer::getXRes(){
-	return vinfo.xres;
-}
-
-int Printer::getYRes(){
-	return vinfo.yres;
-}
+fb_var_screeninfo Printer::vinfo = {};
+fb_fix_screeninfo Printer::finfo = {};
+unsigned char* Printer::workspaceframe = NULL;
 
 int Printer::initializePrinter(){
     // Open the file for reading and writing

@@ -20,10 +20,9 @@ public:
 	static void setColor(unsigned char R, unsigned char G, unsigned char B, unsigned char alpha);
 	static void printToScreen();
 
-	static int getXRes();
-	static int getYRes();
+	static int getXRes(){ return vinfo.xres; };
+	static int getYRes(){ return vinfo.yres; };
 
-private:
     static int fbfd;
     static struct fb_var_screeninfo vinfo;
     static struct fb_fix_screeninfo finfo;

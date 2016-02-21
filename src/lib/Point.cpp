@@ -44,6 +44,11 @@ void Point::rotate(float t, const Point& cp) {
 	rotate(t,cp.getX(),cp.getY());
 }
 
+void Point::scale(float s) {
+	x = (int)x*s;
+	y = (int)y*s;
+}
+
 void Point::scale(float scaleX, float scaleY) {
 	x = (int) x*scaleX;
 	y = (int) y*scaleY;
@@ -62,4 +67,15 @@ void Point::scale(float s, Point& cp) {
 void Point::translate(int deltaX, int deltaY) {
 	x = x * deltaX;
 	y = y * deltaY;
+}
+
+Point Point::hasilRotasi(float deltaDegree) const{
+	float deltaRad = deltaDegree*M_PI/180.0;
+	Point p((double)x*cos(deltaRad)-(double)y*sin(deltaRad),(double)x*sin(deltaRad)+(double)y*cos(deltaRad));
+	return p;
+}
+
+Point Point::hasilMirror00() const{
+	Point p(-x,-y);
+	return p;
 }
