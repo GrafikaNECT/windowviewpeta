@@ -1,9 +1,9 @@
 #include "peta.h"
-#include "point.h"
 #include <sstream>
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -30,19 +30,42 @@ void peta::drawPulau(string fileName, int R, int G, int B, int alpha) {
 	    
 	}
 
-	//Read from file
+	// Using getline() to read one line at a time.
 	string line;
-	int num = 0;
-	while (getline(infile, line))
-	{
-	    std::istringstream iss(line);
-	    
-	    if (line == "") {
-	    } else {
-	    	cout << line << endl;	
-	    	num++;
-	    }
+	while (getline(infile, line)) {
+	std::vector<int> vx;
+	std::vector<int> vy;
 
+
+	if (line.empty()) continue;
+
+	// Using istringstream to read the line into integers.
+	istringstream iss(line);
+
+	int next;
+	bool isX = 1;
+
+	while (iss >> next) {
+		if (isX) {
+			isX = 0;
+			vx.push_back(next);
+		} else {
+			isX = 1;
+			vy.push_back(next);
+		}
+		
+		if (iss.peek() == ',')
+			iss.ignore();
 	}
-	cout << num << endl;
+
+	for (int i = 0; i < vx.size(); i++) {
+		cout << vx.at(i) << " ";
+		cout << vy.at(i) << "\n";
+	}  
+		cout << endl;
+	}
+
+	infile.close();
+
+	  
 }
