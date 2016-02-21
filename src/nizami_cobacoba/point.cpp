@@ -33,6 +33,10 @@ void point::scale(float s) {
 	x = (int)x*s;
 	y = (int)y*s;
 }
+void point::scale(float sx, float sy){
+	x*=sx;
+	y*=sy;
+}
 void point::scale(float s, int cx, int cy) {
 	move(-cx,-cy);
 	scale(s);
