@@ -1,3 +1,9 @@
+
+/*
+ * Nama Berkas			: image.cpp
+ * Deskripsi			: Realisasi dari image.h
+ */
+
 #ifndef image_cpp
 #define image_cpp
 
@@ -195,3 +201,5 @@ void Image::draw(){
 }
 
 #endif
+
+

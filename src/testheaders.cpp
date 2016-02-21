@@ -1,13 +1,14 @@
 //UNTUK PENGECEKAN SINTAKS HEADER
 //bukan untuk semantik
 
-#include "Scaleable.h"
-#include "Rotateable.h"
-#include "Transformable.h"
-#include "Point.h"
-#include "Clippable.h"
-#include "Alam.h"
-#include "Window.h"
+#include "include/Scaleable.h"
+#include "include/Rotateable.h"
+#include "include/Transformable.h"
+#include "include/Point.h"
+#include "include/Printer.h"
+#include "include/Clippable.h"
+#include "include/World.h"
+#include "include/Window.h"
 
 int main(){
 //kosongkan

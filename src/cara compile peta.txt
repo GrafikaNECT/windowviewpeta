@@ -1,0 +1,2 @@
+g++ -o peta.exe TestIsland.cpp Map.cpp nizami_cobacoba/solidpolygon.cpp nizami_cobacoba/texture.cpp nizami_cobacoba/point.cpp nizami_cobacoba/print.c -std=gnu++11 -fpermissive
+

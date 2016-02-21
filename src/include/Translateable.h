@@ -3,7 +3,7 @@
 
 class Translateable{
 	public:
-	virtual void Translate(int deltaX, int deltaY) = 0;
+	virtual void translate(int deltaX, int deltaY) = 0;
 };
 
 #endif
