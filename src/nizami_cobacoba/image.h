@@ -11,9 +11,22 @@
 class Image {
 	public:
 
+	//menambah line
+	//perhatikan orderGambar (spek di bawah)
 	void addLine(line l);
+
+	//memanggil addLine
+	//misal: isi points adalah {p0,p1,p2, ... pn-1}
+	//	maka, panggil 	addLine(line(p0,p1))
+	//			addLine(line(p1,p2))
+	//			.
+	//			.
+	//			.
+	//			addLine(line(pn-2,pn-1))
 	void addLines(const std::list<point>& points);
 
+	//menambah SolidPolygon
+	//perhatikan orderGambar (spek di bawah)
 	void addSolidPolygon(SolidPolygon solidPolygon);
 	
 	//membuat image dari streamImage
@@ -46,6 +59,8 @@ class Image {
 	Image hasilSkala(float scale){return hasilSkala(scale,scale);}
 	Image hasilSkala(float scaleX, float scaleY);
 
+	//gambar
+	//line dan poligon
 	void draw();
 
 	private:
@@ -54,8 +69,14 @@ class Image {
 
 //untuk iterasi menggambar,
 //saat di-add, ini diisi dengan order gambar yang menaik
+//misal: bila dipanggil addLine, addLine, addSolidPolygon, addLine, addLine, addSolidPolygon
+//maka, ordergambarLine: {0,1,3,4}
+//	orderGambarSolidPolygon: {2,5}
 	std::list<int> orderGambarLine;
-	std::list<int> orderGambarPolygon;
+	std::list<int> orderGambarSolidPolygon;
+
+	//untuk mentrack saat add orderGambar
+	int numElmts;
 };
 
 #endif
