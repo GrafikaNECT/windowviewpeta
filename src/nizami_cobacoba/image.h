@@ -76,7 +76,7 @@ class Image {
 	std::list<int> orderGambarSolidPolygon;
 
 	//untuk mentrack saat add orderGambar
-	int numElmts;
+	int numElmts=0;
 };
 
 #endif
