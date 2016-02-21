@@ -7,6 +7,7 @@ using namespace std;
 
 int main () {
 	Map map(20);
+	Map mapkal(20);
 
 
 	initializePrinter();
@@ -20,6 +21,12 @@ int main () {
 	map.draw();
 	printToScreen();
 
+	string filekal = "Peta/Kalimantan.txt";
+
+	mapkal.initialize(file, 0,0,0,255);
+
+	mapkal.draw();
+	printToScreen();
 
 	return 0;
 }
