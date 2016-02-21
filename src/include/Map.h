@@ -25,16 +25,23 @@ public:
 	void setNumberOfIsland(int num);
 
 	// Graphics
-	void initialize(string fileName, int R, int G, int B, int alpha);
+	void initialize(string fileName);
 
 	// Draw each island
 	void draw();
 	
 private:
 	//Atribut
+	struct color {
+		int R;
+		int G;
+		int B;
+		int alpha;
+	};
+
 	int numIsland;
 	vector<SolidPolygon> island;
-
+	vector<color> islandColor;
 };
 
 

@@ -14,19 +14,19 @@ int main () {
 	Printer::drawCanvas(255,255,255,255);
 
 
-	string file = "Peta/Sumatera.txt";
+	string file = "Peta/Indonesia.txt";
 
-	map.initialize(file, 0,0,0,255);
+	map.initialize(file);
 
 	map.draw();
 	Printer::printToScreen();
 
-	string filekal = "Peta/Kalimantan.txt";
+	// string filekal = "Peta/Kalimantan.txt";
 
-	mapkal.initialize(file, 0,0,0,255);
+	// mapkal.initialize(file);
 
-	mapkal.draw();
-	Printer::printToScreen();
+	// mapkal.draw();
+	// Printer::printToScreen();
 
 	return 0;
 }
