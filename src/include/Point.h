@@ -3,6 +3,8 @@
 
 #include "Transformable.h"
 
+using namespace std;
+
 class Point:public Transformable{
 public:
 	// Constructor
