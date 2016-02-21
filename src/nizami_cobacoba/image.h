@@ -36,8 +36,13 @@ class Image {
 	static Image fromStream(std::istream& streamGambar,
 				std::istream& streamTekstur);
 
+	//clip semua elemen
 	Image clip(point min, point max);
+
+	//geser semua elemen
 	Image hasilGeser(point delta);
+
+	//skala semua elemen gambar
 	Image hasilSkala(float scale){return hasilSkala(scale,scale);}
 	Image hasilSkala(float scaleX, float scaleY);
 
