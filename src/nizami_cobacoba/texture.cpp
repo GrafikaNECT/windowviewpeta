@@ -55,3 +55,53 @@ void Texture::draw(int x,int y){
 
 	drawPix(x,y,R[i][j],G[i][j],B[i][j],A[i][j]);
 }
+
+	//transformasi
+Texture Texture::hasilSkala(float xScale, float yScale){
+	int _sizeY = sizeY*yScale;
+	int _sizeX = sizeX*yScale;
+	if (_sizeY==0)
+		_sizeY=1;
+	if (_sizeX==0)
+		_sizeX=1;
+	std::vector<std::vector<int> > _R(_sizeY);
+	std::vector<std::vector<int> > _G(_sizeY);
+	std::vector<std::vector<int> > _B(_sizeY);
+	std::vector<std::vector<int> > _A(_sizeY);
+	for (int i=0;i<_sizeY;i++){
+		_R[i].resize(_sizeX);
+		_G[i].resize(_sizeX);
+		_B[i].resize(_sizeX);
+		_A[i].resize(_sizeX);
+		for (int j=0;j<_sizeX;j++){
+			int refi=i/yScale;
+			int refj=j/xScale;
+			_R[i][j]=R[refi][refj];
+			_G[i][j]=G[refi][refj];
+			_B[i][j]=B[refi][refj];
+			_A[i][j]=A[refi][refj];
+		}
+	}
+	return Texture(_R,_G,_B,_A,sizeX,sizeY);
+}
+Texture Texture::hasilTranslasi(int deltaX, int deltaY){
+	std::vector<std::vector<int> > _R(sizeY);
+	std::vector<std::vector<int> > _G(sizeY);
+	std::vector<std::vector<int> > _B(sizeY);
+	std::vector<std::vector<int> > _A(sizeY);
+	for (int i=0;i<sizeY;i++){
+		_R[i].resize(sizeX);
+		_G[i].resize(sizeX);
+		_B[i].resize(sizeX);
+		_A[i].resize(sizeX);
+		for (int j=0;j<sizeX;j++){
+			int refi=((i-deltaY)%sizeY+sizeY)%sizeY;
+			int refj=((j-deltaX)%sizeX+sizeX)%sizeX;
+			_R[i][j]=R[refi][refj];
+			_G[i][j]=G[refi][refj];
+			_B[i][j]=B[refi][refj];
+			_A[i][j]=A[refi][refj];
+		}
+	}
+	return Texture(_R,_G,_B,_A,sizeX,sizeY);
+}
