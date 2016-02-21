@@ -25,6 +25,7 @@ int line::getX2() {return p2.getX();}
 int line::getY2() {return p2.getY();}
 
 // Operations
+void line::move(point delta){move(delta.getX(),delta.getY());};
 void line::move(int dx, int dy) {
 	p1.move(dx,dy);
 	p2.move(dx,dy);
@@ -33,14 +34,18 @@ void line::scale(float s) {
 	p1.scale(s);
 	p2.scale(s);
 }
+void line::scale(float sx, float sy){
+	p1.scale(sx,sy);
+	p2.scale(sx,sy);
+}
 void line::scale(float s, int x, int y) {
 	p1.scale(s,x,y);
 	p2.scale(s,x,y);
 }
-void line::scale(float s, point p) {
+/*void line::scale(float s, point p) {
 	p1.scale(s,p);
 	p2.scale(s,p);
-}
+}*/
 void line::rotate(float t) {
 	p1.rotate(t);
 	p2.rotate(t);
@@ -133,9 +138,9 @@ line line::clip(point min, point max){
 		}
 	}
 	if (accept) {
-        return line(x1,y1,x2,y2);
+        return line(x1,y1,x2,y2,texture);
 	} else{
-		return line(-1,-1,-1,-1);
+		return line(-1,-1,-1,-1, texture);
 	}
 }
 
@@ -180,10 +185,10 @@ void line::draw() {
 		i = 0;
 		j = 0;
 		while (cx*i<=cx*dx) {
-			drawPix(x1+i,y1+j,255,255,255,255);
+			texture.draw(x1+i,y1+j);
 			while (i*dy*cs>j*dx*cs) {
 				j = j+cy;
-				drawPix(x1+i,y1+j,255,255,255,255);
+				texture.draw(x1+i,y1+j);
 			}
 			i = i+cx;
 		}

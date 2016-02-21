@@ -26,7 +26,9 @@ public:
 	
 	// Operations
 	void move(int dx, int dy);
+	void move(point delta);
 	void scale(float s);
+	void scale(float sx, float sy);
 	void scale(float s, int x, int y);
 	void scale(float s, point p);
 	void rotate(float t);

@@ -8,7 +8,10 @@ int main() {
 
 	drawCanvas(0,0,0,255);
 
-	line l(0,0,500,500);
+	line l(0,0,500,500,Texture::createSingleColorTexture(255,0,0,255));
+	l.draw();
+	printToScreen();
+	sleep(1);
 	point min(0,50);
 	point max(500,250);
 	l.clip(min,max).draw();
