@@ -21,8 +21,22 @@ public:
 
 	// Operations
 	void rotate(float rotateDeg);
+	void rotate(float t, int cx, int cy);
+	void rotate(float t, const Point& cp);
+	void scale(float s);
 	void scale(float scaleX, float scaleY);
+	void scale(float s, int cx, int cy);
+	void scale(float s, Point& cp);
 	void translate(int deltaX, int deltaY);
+
+	// Others
+	void geser(int _x, int _y){x+=_x; y+=_y;};
+	Point hasilGeser(int _x, int _y) const{
+		Point p(getX()+_x,getY()+_y);
+		return p;
+	};
+	Point hasilRotasi(float deltaDegree) const;
+	Point hasilMirror00() const;
 
 private:
 	int x;

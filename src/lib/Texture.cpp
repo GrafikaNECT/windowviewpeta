@@ -1,5 +1,5 @@
 #include "../include/Texture.h"
-#include "../include/print.h"
+#include "../include/Printer.h"
 
 Texture::Texture(std::vector<std::vector<int> > R,
 		std::vector<std::vector<int> > G,
@@ -53,5 +53,5 @@ void Texture::draw(int x,int y){
 	int j = x%sizeX;
 	int i = y%sizeY;
 
-	drawPix(x,y,R[i][j],G[i][j],B[i][j],A[i][j]);
+	Printer::drawPix(x,y,R[i][j],G[i][j],B[i][j],A[i][j]);
 }

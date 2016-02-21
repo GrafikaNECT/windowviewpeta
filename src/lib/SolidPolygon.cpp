@@ -1,29 +1,29 @@
 #include "../include/SolidPolygon.h"
-#include "../include/line.h" //BELUM DICOPY
-#include "../include/print.h" //BELUM DICOPY
+#include "../include/Line.h"
+#include "../include/Printer.h" 
 
 #include <algorithm>
 
 void SolidPolygon::push_back(int x, int y){
-	point p(x,y);
+	Point p(x,y);
 	push_back(p);
 }
 
-SolidPolygon SolidPolygon::hasilGeser(point delta){
+SolidPolygon SolidPolygon::hasilGeser(Point delta){
 	return hasilGeser(delta.getX(), delta.getY());
 }
 
 SolidPolygon SolidPolygon::hasilGeser(int deltax, int deltay){
 	SolidPolygon retval = *this;
-	for (int i=0;i<std::vector<point>::size();i++){
-		retval[i].geser(deltax,deltay);
+	for (int i=0;i<std::vector<Point>::size();i++){
+		retval[i].scale(deltax,deltay);
 	}
 	return retval;
 }
 SolidPolygon SolidPolygon::hasilPerbesar(float scale){
 	SolidPolygon retval = *this;
-	for (int i=0;i<std::vector<point>::size();i++){
-		point& p = retval[i];
+	for (int i=0;i<std::vector<Point>::size();i++){
+		Point& p = retval[i];
 		p.setX(p.getX()*scale);
 		p.setY(p.getY()*scale);
 	}
@@ -32,8 +32,8 @@ SolidPolygon SolidPolygon::hasilPerbesar(float scale){
 
 SolidPolygon SolidPolygon::hasilSkala(float scaleX, float scaleY){
 	SolidPolygon retval = *this;
-	for (int i=0;i<std::vector<point>::size();i++){
-		point& p = retval[i];
+	for (int i=0;i<std::vector<Point>::size();i++){
+		Point& p = retval[i];
 		p.setX(p.getX()*scaleX);
 		p.setY(p.getY()*scaleY);
 	}
@@ -41,15 +41,15 @@ SolidPolygon SolidPolygon::hasilSkala(float scaleX, float scaleY){
 }
 
 SolidPolygon SolidPolygon::hasilRotasi(float deltaDegree){
-	SolidPolygon retval(std::vector<point>::size(),texture);
-	for (int i=0;i<std::vector<point>::size();i++){
-		const point& p = at(i);
+	SolidPolygon retval(std::vector<Point>::size(),texture);
+	for (int i=0;i<std::vector<Point>::size();i++){
+		const Point& p = at(i);
 		retval[i]=p.hasilRotasi(deltaDegree);
 	}
 	return retval;	
 }
 
-SolidPolygon SolidPolygon::hasilRotasi(float deltaDegree, point poros){
+SolidPolygon SolidPolygon::hasilRotasi(float deltaDegree, Point poros){
 	SolidPolygon tmp1 = hasilGeser(poros.hasilMirror00());
 	SolidPolygon tmp2 = tmp1.hasilRotasi(deltaDegree);
 	return tmp2.hasilGeser(poros);
@@ -70,9 +70,9 @@ void SolidPolygon::draw(){
 	} */
 	
 	SolidPolygon& p = *this; //(biar gak repot ganti semua)
-	//coba fill pakai point-in-SolidPolygon http://alienryderflex.com/SolidPolygon_fill/
+	//coba fill pakai Point-in-SolidPolygon http://alienryderflex.com/SolidPolygon_fill/
 	//TODO tukar loop x dan y supaya cepat (mungkin, cobain)
-	for (int y=0;y<getYRes();y++){
+	for (int y=0;y<Printer::getYRes();y++){
 		//ambil intersection dengan garis
 		std::vector<int> intersections;
 		for (int i=0;i<p.size()-1;i++){
@@ -105,18 +105,18 @@ void SolidPolygon::draw(){
 	}
 }
 
-point computeIntersectionWithXline(point p1, point p2, int x){
+Point computeIntersectionWithXline(Point p1, Point p2, int x){
 	if (p1.getX()==p2.getX())
-		return point(x,p1.getY());
+		return Point(x,p1.getY());
 	int y = (float)(p2.getY()-p1.getY())/(p2.getX()-p1.getX())*(x-p1.getX())+p1.getY();
-	return point(x,y);
+	return Point(x,y);
 }
 
-point computeIntersectionWithYline(point p1, point p2, int y){
+Point computeIntersectionWithYline(Point p1, Point p2, int y){
 	if (p1.getY()==p2.getY())
-		return point(p1.getX(),y);
+		return Point(p1.getX(),y);
 	int x = (float)(p2.getX()-p1.getX())/(p2.getY()-p1.getY())*(y-p1.getY())+p1.getX();
-	return point(x,y);
+	return Point(x,y);
 }
 
 //COHEN-SUTHERLAND?????
@@ -127,10 +127,10 @@ point computeIntersectionWithYline(point p1, point p2, int y){
 //sori udah pusing
 //males bikin komentar
 
-SolidPolygon SolidPolygon::clip(point min, point max){
+SolidPolygon SolidPolygon::clip(Point min, Point max){
 	SolidPolygon out = *this;
 	SolidPolygon in;
-	point S;
+	Point S;
 
 	int x0 = min.getX();
 	int y0 = min.getY();
