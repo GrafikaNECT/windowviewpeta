@@ -6,11 +6,17 @@
 #include "point.h"
 #include "image.h"
 #include "sistemwindowview.h"
-#include "conio.h"
+#include "kbhit.h"
 
-#define MARGIN 20
+#include "solidpolygon.h"
+#include "line.h"
+
+#define MARGIN 100
 #define DEFAULTWINDOWWIDTH 1657
-#define BOTTOMTEXTSPACE 50
+#define BOTTOMTEXTSPACE 200
+
+//warnawarna
+#define VIEWCANVASTEXTURE Texture::createSingleColorTexture(0,0,0,255)
 
 using std::endl;
 using std::cerr;
@@ -47,13 +53,26 @@ int main(int argc, char *argv[] ){
 
 	//buat sebuah objek sistemwindowview
 	SistemWindowView sistemWindowView(windowMin,windowMax,viewMin,viewMax,i);
-	
+
+	//kanvas di view
+	SolidPolygon viewCanvas(VIEWCANVASTEXTURE);
+	viewCanvas.push_back(viewMin);
+	viewCanvas.push_back(point(viewMin.getX(),viewMax.getY()));
+	viewCanvas.push_back(viewMax);
+	viewCanvas.push_back(point(viewMax.getX(),viewMin.getY()));
+
 	//looping menerima kontrol untuk pan dan zoom serta menggambar
 	//jangan lupa ada kontrol untuk quit
-
+	drawCanvas(100,100,100,255);
+	viewCanvas.draw();
+	sistemWindowView.draw();
+	printToScreen();
 	bool cont=true;
 	char c;
-	while (cont){
+	initTermios();
+	while (cont)
+	if (kbhit())
+	{
 		c=getch();
 		switch(c){
 		case 'w':
@@ -81,11 +100,12 @@ int main(int argc, char *argv[] ){
 			cerr<<"No action bound for key '"<<c<<"'"<<endl;
 		break;
 		}
+		viewCanvas.draw();
 		sistemWindowView.draw();
 		printToScreen();
 	}
 
-
+	resetTermios();
 	//quit
 	finishPrinter();
 }
