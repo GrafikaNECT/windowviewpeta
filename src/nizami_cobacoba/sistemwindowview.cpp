@@ -1,11 +1,14 @@
 #include "sistemwindowview.h"
 
-SistemWindowView::SistemWindowView(point windowMin, point windowMax, point viewMin, point viewMax, Image map) {
+SistemWindowView::SistemWindowView(point windowMin, point windowMax, point viewMin, point viewMax, Image map, point minimapPos, float minimapScale) {
 	this->windowMin = windowMin;
 	this->windowMax = windowMax;
 	this->viewMin = viewMin;
 	this->viewMax = viewMax;
 	this->map = map;
+	this->minimapPos = minimapPos;
+	this->minimapScale = minimapScale;
+	this->minimap = map.hasilSkala(minimapScale).hasilGeser(minimapPos);
 }
 
 point SistemWindowView::getWindowMin() {return windowMin;}
@@ -72,4 +75,21 @@ void SistemWindowView::draw() {
 		.hasilGeser(move1)
 		.hasilSkala(ratio_x,ratio_y)
 		.hasilGeser(move2).draw();
+
+	drawMinimap();
+}
+
+void SistemWindowView::drawMinimap() {
+	minimap.draw();
+	Texture lineTexture = Texture::createSingleColorTexture(0,0,255,255);
+	line top(windowMin,point(windowMax.getX(),windowMin.getY()),lineTexture);
+	line bottom(point(windowMin.getX(),windowMax.getY()),windowMax,lineTexture);
+	line left(windowMin,point(windowMin.getX(),windowMax.getY()),lineTexture);
+	line right(point(windowMax.getX(),windowMin.getY()),windowMax,lineTexture);
+	Image window;
+	window.addLine(top);
+	window.addLine(bottom);
+	window.addLine(left);
+	window.addLine(right);
+	window.hasilSkala(minimapScale).hasilGeser(minimapPos).draw();
 }

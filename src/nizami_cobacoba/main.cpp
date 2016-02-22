@@ -17,6 +17,7 @@
 
 //warnawarna
 #define VIEWCANVASTEXTURE Texture::createSingleColorTexture(0,0,0,255)
+#define BGTEXTURE Texture::createSingleColorTexture(100,100,100,255)
 
 using std::endl;
 using std::cerr;
@@ -52,7 +53,7 @@ int main(int argc, char *argv[] ){
 	point windowMax(DEFAULTWINDOWWIDTH,viewMax.getY()*DEFAULTWINDOWWIDTH/viewMax.getX());
 
 	//buat sebuah objek sistemwindowview
-	SistemWindowView sistemWindowView(windowMin,windowMax,viewMin,viewMax,i);
+	SistemWindowView sistemWindowView(windowMin,windowMax,viewMin,viewMax,i,point(viewMin.getX(),viewMax.getY()+50),0.2);
 
 	//kanvas di view
 	SolidPolygon viewCanvas(VIEWCANVASTEXTURE);
@@ -60,6 +61,12 @@ int main(int argc, char *argv[] ){
 	viewCanvas.push_back(point(viewMin.getX(),viewMax.getY()));
 	viewCanvas.push_back(viewMax);
 	viewCanvas.push_back(point(viewMax.getX(),viewMin.getY()));
+
+	SolidPolygon minimapCanvas(BGTEXTURE);
+	minimapCanvas.push_back(viewMin.getX(),viewMax.getY()+50);
+	minimapCanvas.push_back(viewMin.getX(),viewMax.getY()+500);
+	minimapCanvas.push_back(viewMin.getX()+500,viewMax.getY()+500);
+	minimapCanvas.push_back(viewMin.getX()+500,viewMax.getY()+50);
 
 	//looping menerima kontrol untuk pan dan zoom serta menggambar
 	//jangan lupa ada kontrol untuk quit
@@ -101,6 +108,7 @@ int main(int argc, char *argv[] ){
 		break;
 		}
 		viewCanvas.draw();
+		minimapCanvas.draw();
 		sistemWindowView.draw();
 		printToScreen();
 	}
