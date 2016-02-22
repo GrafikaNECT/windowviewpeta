@@ -160,15 +160,15 @@ void line::draw() {
 	
 	if (x1==x2) {	// Vertikal
 		if (y1<=y2) {
-			for (i=y1;i<=y2;i++) drawPix(x1,i,255,255,255,255);
+			for (i=y1;i<=y2;i++) drawPix(x1,i,255,0,0,255);
 		} else {
-			for (i=y2;i<=y1;i++) drawPix(x1,i,255,255,255,255);
+			for (i=y2;i<=y1;i++) drawPix(x1,i,255,0,0,255);
 		}
 	} else if (y1==y2) {	// Horizontal
 		if (x1<=x2) {
-			for (i=x1;i<=x2;i++) drawPix(i,y1,255,255,255,255);
+			for (i=x1;i<=x2;i++) drawPix(i,y1,255,0,0,255);
 		} else {
-			for (i=x2;i<=x1;i++) drawPix(i,y1,255,255,255,255);
+			for (i=x2;i<=x1;i++) drawPix(i,y1,255,0,0,255);
 		}
 	} else {
 		// Check for quadrant position of p2

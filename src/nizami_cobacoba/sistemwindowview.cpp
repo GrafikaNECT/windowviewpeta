@@ -81,7 +81,7 @@ void SistemWindowView::draw() {
 
 void SistemWindowView::drawMinimap() {
 	minimap.draw();
-	Texture lineTexture = Texture::createSingleColorTexture(0,0,255,255);
+	Texture lineTexture = Texture::createSingleColorTexture(255,0,0,255);
 	line top(windowMin,point(windowMax.getX(),windowMin.getY()),lineTexture);
 	line bottom(point(windowMin.getX(),windowMax.getY()),windowMax,lineTexture);
 	line left(windowMin,point(windowMin.getX(),windowMax.getY()),lineTexture);

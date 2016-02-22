@@ -63,10 +63,10 @@ int main(int argc, char *argv[] ){
 	viewCanvas.push_back(point(viewMax.getX(),viewMin.getY()));
 
 	SolidPolygon minimapCanvas(BGTEXTURE);
-	minimapCanvas.push_back(viewMin.getX(),viewMax.getY()+50);
-	minimapCanvas.push_back(viewMin.getX(),viewMax.getY()+500);
+	minimapCanvas.push_back(0,viewMax.getY());
+	minimapCanvas.push_back(0,viewMax.getY()+500);
 	minimapCanvas.push_back(viewMin.getX()+500,viewMax.getY()+500);
-	minimapCanvas.push_back(viewMin.getX()+500,viewMax.getY()+50);
+	minimapCanvas.push_back(viewMin.getX()+500,viewMax.getY());
 
 	//looping menerima kontrol untuk pan dan zoom serta menggambar
 	//jangan lupa ada kontrol untuk quit
