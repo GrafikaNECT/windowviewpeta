@@ -1,11 +1,11 @@
 #include "sistemwindowview.h"
 
 SistemWindowView::SistemWindowView(point windowMin, point windowMax, point viewMin, point viewMax, Image map) {
-	this.windowMin = windowMin;
-	this.windowMax = windowMax;
-	this.viewMin = viewMin;
-	this.viewMax = viewMax;
-	this.map = map;
+	this->windowMin = windowMin;
+	this->windowMax = windowMax;
+	this->viewMin = viewMin;
+	this->viewMax = viewMax;
+	this->map = map;
 }
 
 point SistemWindowView::getWindowMin() {return windowMin;}
@@ -18,30 +18,28 @@ void SistemWindowView::setWindowMin(point min) {windowMin = min;}
 void SistemWindowView::setWindowMax(point max) {windowMax = max;}
 void SistemWindowView::setViewMin(point min) {viewMin = min;}
 void SistemWindowView::setViewMax(point max) {viewMax = max;}
-void SistemWindowView::setMap(Image map) {this.map = map;}
+void SistemWindowView::setMap(Image map) {this->map = map;}
 
-void SistemWindowView::pan(string direction) {
-	switch (direction) {
-		case 'left':
-			windowMin.move(-PAN,0);
-			windowMax.move(-PAN,0);
-			break;
-		case 'right':
-			windowMin.move(PAN,0);
-			windowMax.move(PAN,0);
-			break;
-		case 'up':
-			windowMin.move(0,-PAN);
-			windowMax.move(0,-PAN);
-			break;
-		case 'down':
-			windowMin.move(0,PAN);
-			windowMax.move(0,PAN);
-			break;
+void SistemWindowView::pan(std::string direction) {
+	if (direction == "left") {
+		windowMin.move(-PAN,0);
+		windowMax.move(-PAN,0);
+	}
+	else if (direction == "right") {
+		windowMin.move(PAN,0);
+		windowMax.move(PAN,0);
+	}
+	else if (direction == "up") {
+		windowMin.move(0,-PAN);
+		windowMax.move(0,-PAN);
+	}
+	else if (direction == "down") {
+		windowMin.move(0,PAN);
+		windowMax.move(0,PAN);
 	}
 }
 
-void SistemWindowView::zoom(string direction) {
+void SistemWindowView::zoom(std::string direction) {
 	int min_x = windowMin.getX();
 	int min_y = windowMin.getY();
 	int max_x = windowMax.getX();
@@ -51,15 +49,12 @@ void SistemWindowView::zoom(string direction) {
 	int deltax = ZOOM;
 	int deltay = (float)(deltax/width)*height;
 	
-	switch (direction) {
-		case 'in'.:
-			windowMin.move(deltax,deltay);
-			windowMax.move(-deltax,-deltay);
-			break;
-		case 'out':
-			windowMin.move(-deltax,-deltay);
-			windowMax.move(deltax,deltay);
-			break;
+	if (direction == "in") {
+		windowMin.move(deltax,deltay);
+		windowMax.move(-deltax,-deltay);
+	} else if (direction == "out") {
+		windowMin.move(-deltax,-deltay);
+		windowMax.move(deltax,deltay);
 	}
 }
 
