@@ -105,6 +105,63 @@ Image Image::fromStream(std::istream& streamGambar,
 	return retval;
 }
 
+#include <sstream>
+#include <string>
+
+Image Image::fromStreamFormatMap(std::istream& infile){
+	Image retval;
+	int num = 0;
+
+	// Using getline() to read one line at a time.
+	std::string line;
+	while (std::getline(infile, line)) {
+
+		if (line.empty()) continue;
+
+		// Using istringstream to read the line into integers.
+		std::getline(infile, line);
+		std::istringstream iss(line);
+
+		int next;
+		bool isX = 1;
+
+		num++;
+
+		iss >> next;
+		int R = next;
+		iss >> next;
+		int G = next;
+		iss >> next;
+		int B = next;
+		iss >> next;
+		int alpha = next;
+
+		SolidPolygon smallIsland(Texture::createSingleColorTexture(R,G,B,alpha)); //TODO: kasih grain
+	
+		std::getline(infile, line);
+		std::istringstream issCoor(line);
+
+		int tempX;
+		while (issCoor >> next) {
+			if (isX) {
+				isX = 0;
+				tempX = next;
+			} else {
+				isX = 1;
+				smallIsland.push_back(tempX, next);
+			}
+			
+			if (issCoor.peek() == ',')
+				issCoor.ignore();
+		}
+
+		retval.addSolidPolygon(smallIsland);
+
+	}
+
+	return retval;
+}
+
 //clip semua elemen
 Image Image::clip(point min, point max){
 	Image retval;

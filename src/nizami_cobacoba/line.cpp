@@ -29,14 +29,17 @@ void line::move(point delta){move(delta.getX(),delta.getY());};
 void line::move(int dx, int dy) {
 	p1.move(dx,dy);
 	p2.move(dx,dy);
+	texture = texture.hasilTranslasi(dx,dy);
 }
 void line::scale(float s) {
 	p1.scale(s);
 	p2.scale(s);
+	texture = texture.hasilSkala(s);
 }
 void line::scale(float sx, float sy){
 	p1.scale(sx,sy);
 	p2.scale(sx,sy);
+	texture = texture.hasilSkala(sx,sy);
 }
 void line::scale(float s, int x, int y) {
 	p1.scale(s,x,y);
