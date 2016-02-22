@@ -47,7 +47,7 @@ void SistemWindowView::zoom(std::string direction) {
 	int width = max_x - min_x;
 	int height = max_y - min_y;
 	int deltax = ZOOM;
-	int deltay = (float)(deltax/width)*height;
+	int deltay = ((float)deltax/width)*height;
 	
 	if (direction == "in") {
 		windowMin.move(deltax,deltay);
@@ -65,7 +65,11 @@ void SistemWindowView::draw() {
 	int windowHeight = windowMax.getY() - windowMin.getY();
 	float ratio_x = (float)viewWidth/windowWidth;
 	float ratio_y = (float)viewHeight/windowHeight;
-	point move(viewMin.getX()-windowMin.getX(),viewMin.getY()-windowMin.getY());
+	point move1(-windowMin.getX(),-windowMin.getY());
+	point move2(viewMin.getX(),viewMin.getY());
 
-	map.clip(windowMin,windowMax).hasilSkala(ratio_x,ratio_y).hasilGeser(move).draw();
+	map.clip(windowMin,windowMax)
+		.hasilGeser(move1)
+		.hasilSkala(ratio_x,ratio_y)
+		.hasilGeser(move2).draw();
 }
