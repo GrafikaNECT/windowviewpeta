@@ -169,8 +169,8 @@ Image Image::clip(point min, point max){
 	std::list<SolidPolygon>::iterator itpol = solidPolygons.begin();
 	std::list<int>::iterator itordline = orderGambarLine.begin();
 	std::list<int>::iterator itordpol = orderGambarSolidPolygon.begin();
-	
-	while (itline != lines.end() && itpol != solidPolygons.end()){
+	int i=0;
+	while (itline != lines.end() || itpol != solidPolygons.end()){
 		if (itordpol==orderGambarSolidPolygon.end()){
 			line l = itline->clip(min,max);
 			if (!(l.getX1()==-1 && l.getX2()==-1
@@ -180,7 +180,7 @@ Image Image::clip(point min, point max){
 			itline++;
 			itordline++;
 		}else if(itordline==orderGambarLine.end()){
-			addSolidPolygon(itpol->clip(min,max));
+			retval.addSolidPolygon(itpol->clip(min,max));
 			itpol++;
 			itordpol++;
 		}else if (*itordline<*itordpol){
@@ -192,7 +192,7 @@ Image Image::clip(point min, point max){
 			itline++;
 			itordline++;
 		}else{
-			addSolidPolygon(itpol->clip(min,max));
+			retval.addSolidPolygon(itpol->clip(min,max));
 			itpol++;
 			itordpol++;
 		}
