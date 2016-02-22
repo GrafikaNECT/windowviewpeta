@@ -11,7 +11,7 @@ int main () {
 
 
 	Printer::initializePrinter();
-	Printer::drawCanvas(255,255,255,255);
+	Printer::drawCanvas(206,247,255,255);
 
 
 	string file = "Peta/Indonesia.txt";
