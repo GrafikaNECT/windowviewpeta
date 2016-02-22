@@ -49,6 +49,8 @@ class Image {
 	static Image fromStream(std::istream& streamGambar,
 				std::istream& streamTekstur);
 
+	static Image fromStreamFormatMap(std::istream& infile);
+
 	//clip semua elemen
 	Image clip(point min, point max);
 
