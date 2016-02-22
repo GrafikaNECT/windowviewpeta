@@ -12,7 +12,7 @@
 #include "line.h"
 
 #define MARGIN 100
-#define DEFAULTWINDOWWIDTH 1657
+#define DEFAULTWINDOWWIDTH 400
 #define BOTTOMTEXTSPACE 200
 
 //warnawarna
