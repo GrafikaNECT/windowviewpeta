@@ -38,8 +38,8 @@ public:
 	void setMap(Image map);
 
 
-	void pan(string direction);
-	void zoom(string direction);
+	void pan(std::string direction);
+	void zoom(std::string direction);
 	void draw();
 };
 
