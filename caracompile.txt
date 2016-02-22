@@ -1,0 +1,1 @@
+g++ -o cobacompile main.cpp sistemwindowview.cpp image.cpp line.cpp solidpolygon.cpp point.cpp texture.cpp print.c -fpermissive -std=gnu++11
