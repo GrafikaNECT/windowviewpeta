@@ -20,7 +20,7 @@ void SistemWindowView::setViewMin(point min) {viewMin = min;}
 void SistemWindowView::setViewMax(point max) {viewMax = max;}
 void SistemWindowView::setMap(Image map) {this.map = map;}
 
-void SistemWindowView::pan(string direction) {
+void SistemWindowView::pan(std::string direction) {
 	switch (direction) {
 		case 'left':
 			windowMin.move(-PAN,0);
@@ -41,7 +41,7 @@ void SistemWindowView::pan(string direction) {
 	}
 }
 
-void SistemWindowView::zoom(string direction) {
+void SistemWindowView::zoom(std::string direction) {
 	int min_x = windowMin.getX();
 	int min_y = windowMin.getY();
 	int max_x = windowMax.getX();
