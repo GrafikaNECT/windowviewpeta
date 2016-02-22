@@ -4,6 +4,10 @@
 #define ZOOM 5
 #define PAN 5
 
+#include "point.h"
+#include "image.h"
+#include <string>
+
 class SistemWindowView{
 	//berisi informasi:
 	//batas-batas window
